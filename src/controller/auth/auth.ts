@@ -71,13 +71,16 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
       userunique?.student_id as number
     );
 
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: false, 
-    });
-
-    res.json({ message: "Welcome", userunique });
+    res
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        sameSite: "strict",
+      })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        sameSite: "strict",
+      })
+      .json({ message: "Logged in", userunique, accessToken, refreshToken });
   } catch (error) {
     console.log(error);
 
@@ -85,4 +88,10 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
       .status(500)
       .json({ message: "An unexpected error occurred during registration." });
   }
+};
+
+export const logout: RequestHandler = async (req: Request, res: Response) => {
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+  res.json({ message: "Logout!" });
 };
