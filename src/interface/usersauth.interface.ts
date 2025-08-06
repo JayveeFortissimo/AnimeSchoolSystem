@@ -4,7 +4,6 @@ export interface UserAuthentication{
     age: number;
     password: string; 
     isAdmin?: boolean;
-    image?: string;
+    image?: string | null;
     contact?: string;
-    
 }

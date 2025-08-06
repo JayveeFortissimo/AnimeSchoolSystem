@@ -28,7 +28,6 @@ export const register: RequestHandler = async (req: Request, res: Response) => {
         age,
         password: hashedPassword,
         contact,
-        image,
       },
     });
 
@@ -43,7 +42,7 @@ export const register: RequestHandler = async (req: Request, res: Response) => {
 
 export const login: RequestHandler = async (req: Request, res: Response) => {
   try {
-    const { username, email, password } = req.body;
+    const {  email, password } = req.body;
 
     const userunique = await prisma.students.findUnique({
       where: {
@@ -56,12 +55,15 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
       userunique?.password as string
     );
 
+    console.log(passwordCompared)
+
     if (!passwordCompared) {
       res.json({ message: "Wrong Password" });
       return;
-    } else if (
-      userunique?.email !== email ||
-      userunique?.username !== username
+    } 
+    
+    if (
+      userunique?.email !== email 
     ) {
       res.json({ message: "Invalid email account or username account" });
       return;
@@ -81,6 +83,7 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
         sameSite: "strict",
       })
       .json({ message: "Logged in", userunique, accessToken, refreshToken });
+
   } catch (error) {
     console.log(error);
 
