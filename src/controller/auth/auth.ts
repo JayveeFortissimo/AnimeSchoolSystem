@@ -77,10 +77,12 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
       .cookie("accessToken", accessToken, {
         httpOnly: true,
         sameSite: "strict",
+        secure:false
       })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         sameSite: "strict",
+          secure:false
       })
       .json({ message: "Logged in", userunique, accessToken, refreshToken });
 
