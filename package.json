@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/server.ts",
-    "deploy": "npm start --prefix ./src/server.ts"
+    "deploy": "npm start --prefix ./src/server.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
